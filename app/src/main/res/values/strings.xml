@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Project</string>
+    <string name="Username">Username</string>
+    <string name="Password">Password</string>
+    <string name="login">login</string>
+    <string name="SignUp">SignUp</string>
+    <string name="action_settings">action_settings</string>
+
+</resources>
