@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 import java.util.Locale;
@@ -20,7 +21,7 @@ public class Register extends AppCompatActivity implements ActionBar.TabListener
 
     SectionsPagerAdapter mSectionsPagerAdapter;
 
-    ViewPager mViewPager;
+    static ViewPager mViewPager;
 
     static final String LOG_TAG = "SlidingTabsBasicFragment";
 
@@ -58,6 +59,10 @@ public class Register extends AppCompatActivity implements ActionBar.TabListener
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
+    }
+
+    public static void jumpTopage(View view) {
+        mViewPager.setCurrentItem(1);
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
