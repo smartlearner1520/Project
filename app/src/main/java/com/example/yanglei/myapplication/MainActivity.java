@@ -3,21 +3,17 @@ package com.example.yanglei.myapplication;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     private EditText ID,Password;
     private TextView signup;
-    private String id,password,sign;
+    private String id,password;
     private boolean result =false;
     private Button login;
 
@@ -37,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
                 //TODO : check the ID and password
                 // searching for id in server--get the id
                 // check the password under this id -- output result= true if both are correct
-                if (id.equals("ID") && password.equals("123")){
+
+                if (CheckID(id) && Checkpassword(password)){
                     result=true;
                 }
                 if(!id.equals("") && !password.equals("") && !result) {
@@ -74,7 +71,27 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
 
+
+    public static Boolean CheckID(String id){
+        // need check the id from server; if it is the same
+        if(id.equals("User")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static Boolean Checkpassword(String password){
+        // need check the password from server; if it is the same
+        if(password.equals("123456")){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 

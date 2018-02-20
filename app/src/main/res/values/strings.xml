@@ -14,5 +14,6 @@
     <string name="optional">(Optional)</string>
     <string name="enter_your_email">Enter Your Email</string>
     <string name="next">Next</string>
+    <string name="take_picture">Take picture</string>
 
 </resources>

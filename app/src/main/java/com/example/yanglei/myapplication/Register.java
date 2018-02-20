@@ -9,12 +9,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 
 import java.util.Locale;
+
+import static com.example.yanglei.myapplication.First.name;
+import static com.example.yanglei.myapplication.First.pw;
 
 
 public class Register extends AppCompatActivity implements ActionBar.TabListener{
@@ -43,7 +46,31 @@ public class Register extends AppCompatActivity implements ActionBar.TabListener
 
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if(First.CheckEmpty(name,pw)){
+                    Log.i("Scrolled: ", " Cannot move to next page");
+                    mViewPager.setCurrentItem(0);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(First.CheckEmpty(name,pw)){
+                    Log.i("Selected", " Cannot move to next page");
+                    mViewPager.setCurrentItem(0);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
+
 
 
     @Override
@@ -81,16 +108,13 @@ public class Register extends AppCompatActivity implements ActionBar.TabListener
                 case 1:
                     fragment = new Second();
                     break;
-                case 2:
-                    fragment = new Third();
-                    break;
             }
             return fragment;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override
@@ -98,10 +122,8 @@ public class Register extends AppCompatActivity implements ActionBar.TabListener
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return "Personal Detail".toUpperCase(l);
+                    return " Personal  Detail ".toUpperCase(l);
                 case 1:
-                    return "Security Setup".toUpperCase(l);
-                case 2:
                     return "Camera Verification".toUpperCase(l);
             }
             return null;

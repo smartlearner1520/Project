@@ -12,22 +12,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/user_name"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentTop="true"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_above="@+id/username"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="350dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:layout_below="@+id/textView3"
         android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3" />
+        android:layout_alignStart="@+id/textView3"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:inputType="textPassword" />
 
     <TextView
         android:id="@+id/textView3"
@@ -35,117 +34,30 @@
         android:layout_height="wrap_content"
         android:text="@string/password"
         android:textColor="@color/darkgrey"
-        android:layout_below="@+id/username"
+        android:layout_above="@+id/password"
         android:layout_alignLeft="@+id/username"
-        android:layout_alignStart="@+id/username"
-        android:layout_marginTop="12dp" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/mobile_phone"
-        android:textColor="@color/darkgrey"
-        android:layout_below="@+id/password"
-        android:layout_alignLeft="@+id/password"
-        android:layout_alignStart="@+id/password"
-        android:layout_marginTop="12dp" />
-
-    <EditText
-        android:id="@+id/NRIC"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_below="@+id/textView5"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_alignStart="@+id/textView5" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nric"
-        android:textColor="@color/darkgrey"
-        android:layout_below="@+id/phone"
-        android:layout_alignLeft="@+id/phone"
-        android:layout_alignStart="@+id/phone"
-        android:layout_marginTop="14dp" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/home_address"
-        android:textColor="@color/darkgrey"
-        android:layout_below="@+id/NRIC"
-        android:layout_alignLeft="@+id/NRIC"
-        android:layout_alignStart="@+id/NRIC"
-        android:layout_marginTop="14dp" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/passport"
-        android:textColor="@color/darkgrey"
-        android:layout_below="@+id/address"
-        android:layout_alignLeft="@+id/address"
-        android:layout_alignStart="@+id/address"
-        android:layout_marginTop="14dp" />
-
-    <EditText
-        android:id="@+id/Passport"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/optional"
-        android:inputType="textPersonName"
-        android:layout_below="@+id/textView7"
-        android:layout_alignLeft="@+id/textView7"
-        android:layout_alignStart="@+id/textView7" />
+        android:layout_alignStart="@+id/username" />
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="350dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/textView3"
+        android:layout_alignLeft="@+id/t1"
+        android:layout_alignStart="@+id/t1"
+        android:layout_marginBottom="38dp"
         android:ems="10"
         android:hint="@string/enter_your_email"
-        android:inputType="textEmailAddress"
-        android:layout_below="@+id/t1"
-        android:layout_alignLeft="@+id/t1"
-        android:layout_alignStart="@+id/t1" />
-
-    <EditText
-        android:id="@+id/phone"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="phone"
-        android:layout_below="@+id/textView4"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4" />
-
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPostalAddress"
-        android:layout_below="@+id/textView6"
-        android:layout_alignLeft="@+id/textView6"
-        android:layout_alignStart="@+id/textView6" />
+        android:inputType="textEmailAddress" />
 
     <Button
         android:id="@+id/Next"
         android:layout_width="80dp"
         android:layout_height="40dp"
-        android:layout_alignEnd="@+id/Passport"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/Passport"
         android:layout_marginBottom="13dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:text="@string/next" />
+        android:text="@string/next"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/password"
+        android:layout_alignEnd="@+id/password" />
 
 </RelativeLayout>
