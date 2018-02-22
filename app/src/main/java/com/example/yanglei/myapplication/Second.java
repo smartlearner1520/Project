@@ -81,7 +81,7 @@ public class Second extends Fragment {
         textureView = (TextureView) view.findViewById(R.id.texture);
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
-        takePictureButton = (Button) view.findViewById(R.id.btn_takepicture);
+        takePictureButton = (Button) view.findViewById(R.id.btn_takepicture1);
         assert takePictureButton != null;
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override

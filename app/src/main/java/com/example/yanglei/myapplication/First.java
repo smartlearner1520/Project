@@ -24,10 +24,10 @@ import com.example.yanglei.myapplication.MyApp;
 import static com.example.yanglei.myapplication.SlidingTabStrip.mDefaultTabColorizer;
 
 public class First extends Fragment {
-    private EditText username,password,IC,Phone;
+    private EditText username,password,IC,Phone,CC;
     protected static String name="";
     protected static String pw="";
-    private String NRIC,PN;
+    private String NRIC,PN,cc;
     private Button button;
     ViewPager mViewPager;
 
@@ -43,13 +43,15 @@ public class First extends Fragment {
         username = view.findViewById(R.id.username);
         password =view.findViewById(R.id.password);
         IC=view.findViewById(R.id.NRIC);
+        CC=view.findViewById(R.id.CC);
+        CC.setText("+65");
         Phone=view.findViewById(R.id.Phone);
         button =view.findViewById(R.id.Next);
         MyApp myapp = MyApp.get();
         final RequestQueue queue = myapp.getRequestQueue();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 name = username.getText().toString();
                 pw = password.getText().toString();
                 NRIC = IC.getText().toString();
@@ -67,6 +69,7 @@ public class First extends Fragment {
                                 public void onResponse(String response) {
                                     // response
                                     Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
+                                    Register.jumpTopage(view);
                                 }
                             },
                             new Response.ErrorListener()
@@ -92,7 +95,8 @@ public class First extends Fragment {
                     };
                     queue.add(postRequest);
                     mDefaultTabColorizer.setIndicatorColors(0xCC00FF00,0xCC33B5E5);
-                    Register.jumpTopage(view);
+
+
                 }
             }
         });

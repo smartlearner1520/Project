@@ -1,14 +1,11 @@
 package com.example.yanglei.myapplication;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -36,7 +33,14 @@ import android.util.SparseIntArray;
 import android.view.Surface;
 import android.view.TextureView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -46,13 +50,14 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.Map;
 
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 
 public class login extends AppCompatActivity {
     private static final String TAG = "yl";
+    private TextView logout,Something;
     private Button takePictureButton;
     private TextureView textureView;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
@@ -74,20 +79,87 @@ public class login extends AppCompatActivity {
     private boolean mFlashSupported;
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
+    MyApp myapp = MyApp.get();
+    final RequestQueue queue = myapp.getRequestQueue();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        textureView = (TextureView) findViewById(R.id.texture);
+        textureView = (TextureView) findViewById(R.id.texture1);
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
-        takePictureButton = (Button) findViewById(R.id.btn_takepicture);
+        takePictureButton = (Button) findViewById(R.id.btn_takepicture1);
         assert takePictureButton != null;
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takePicture();
+            }
+        });
+
+        logout = (TextView) findViewById(R.id.Logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "http://132lilinwei.pythonanywhere.com/realapp/logout/";
+                MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+                        new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response) {
+                                // response
+                                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(login.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // error
+                                Log.d("Error.Response", error.toString());
+                            }
+                        }
+                ) {
+                    @Override
+                    protected Map<String, String> getParams()
+                    {
+
+
+                        return null;
+                    }
+                };
+                queue.add(postRequest);
+            }
+        });
+
+        Something = (TextView) findViewById(R.id.st);
+        Something.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "http://132lilinwei.pythonanywhere.com/realapp/something/";
+                MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+                        new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response) {
+                                // response
+                                Toast.makeText(login.this,response,Toast.LENGTH_LONG).show();
+                            }
+                        },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // error
+                                Log.d("Error.Response", error.toString());
+                            }
+                        }
+                );
+                queue.add(postRequest);
+
             }
         });
 
@@ -335,4 +407,6 @@ public class login extends AppCompatActivity {
         stopBackgroundThread();
         super.onPause();
     }
+
+
 }

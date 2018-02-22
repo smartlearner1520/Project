@@ -87,15 +87,26 @@
             android:text="@string/login"/>
 
         <TextView
+            android:id="@+id/Something"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/signuptext"
+            android:layout_marginTop="13dp"
+            android:gravity="center"
+            android:text="Something"
+            android:textSize="16dp" />
+
+        <TextView
             android:id="@+id/signuptext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/loginButton"
-            android:textSize="16dp"
             android:layout_marginTop="40dp"
             android:gravity="center"
-            android:text="@string/SignUp"/>
-
+            android:text="@string/SignUp"
+            android:textSize="16dp" />
 
 
     </RelativeLayout>

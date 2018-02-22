@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.yanglei.myapplication.login">
 
-    <TextView
-        android:id="@+id/textView"
+    <TextureView
+        android:id="@+id/texture1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_takepicture1"
+        android:layout_alignParentTop="true" />
+    <Button
+        android:id="@+id/btn_takepicture1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login Successfully"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/take_picture" />
+
+    <TextView
+        android:id="@+id/Logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log Out"
         android:textSize="20dp"
-        tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="243dp" />
-</android.support.constraint.ConstraintLayout>
+        tools:layout_editor_absoluteX="297dp"
+        tools:layout_editor_absoluteY="514dp"
+        android:layout_alignTop="@+id/btn_takepicture1"
+        android:layout_alignLeft="@+id/st"
+        android:layout_alignStart="@+id/st" />
+
+    <TextView
+        android:id="@+id/st"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Something"
+        android:layout_marginRight="21dp"
+        android:layout_marginEnd="21dp"
+        android:layout_alignBottom="@+id/btn_takepicture1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

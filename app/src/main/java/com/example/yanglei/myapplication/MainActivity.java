@@ -1,6 +1,7 @@
 package com.example.yanglei.myapplication;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +24,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private EditText ID,Password;
-    private TextView signup;
+    private TextView signup,Something;
     private String id,password;
     private boolean result =false;
     private Button login;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MediaPlayer music= MediaPlayer.create(MainActivity.this,R.raw.Something_Just_Like_This);
+        music.start();
         final RequestQueue queue = Volley.newRequestQueue(this);
         ID = (EditText) findViewById(R.id.username);
         Password = (EditText) findViewById(R.id.password);
@@ -39,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = "http://132lilinwei.pythonanywhere.com/realapp/login";
+                String url = "http://132lilinwei.pythonanywhere.com/realapp/login/";
                 id=ID.getText().toString();
                 password=Password.getText().toString();
                 if(NotEmpty(id,password)) {
@@ -90,6 +93,34 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent1 = new Intent(MainActivity.this, Register.class);
                 startActivity(intent1);
+            }
+        });
+
+        Something = (TextView) findViewById(R.id.Something);
+        Something.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "http://132lilinwei.pythonanywhere.com/realapp/something/";
+                MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+                        new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response) {
+                                // response
+                                Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
+                            }
+                        },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // error
+                                Log.d("Error.Response", error.toString());
+                            }
+                        }
+                );
+                queue.add(postRequest);
+
             }
         });
 
