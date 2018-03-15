@@ -1,13 +1,14 @@
 package com.example.yanglei.myapplication;
 
-
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Base64;
 import android.view.View;
-import android.view.ViewGroup;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -35,30 +36,45 @@ import android.util.SparseIntArray;
 import android.view.Surface;
 import android.view.TextureView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class Second extends Fragment {
 
+public class MainFirstPage extends AppCompatActivity {
     private static final String TAG = "yl";
+    private TextView logout,Something;
     private Button takePictureButton;
     private TextureView textureView;
+    private String filepath = "";
+    private static int ID=0;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     static {
-        ORIENTATIONS.append(Surface.ROTATION_0, 90);
+        ORIENTATIONS.append(Surface.ROTATION_0, 270);
         ORIENTATIONS.append(Surface.ROTATION_90, 0);
-        ORIENTATIONS.append(Surface.ROTATION_180, 270);
+        ORIENTATIONS.append(Surface.ROTATION_180, 90);
         ORIENTATIONS.append(Surface.ROTATION_270, 180);
     }
     private String cameraId;
@@ -73,15 +89,17 @@ public class Second extends Fragment {
     private boolean mFlashSupported;
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
-
+    MyApp myapp = MyApp.get();
+    final RequestQueue queue = myapp.getRequestQueue();
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_second, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
-        textureView = (TextureView) view.findViewById(R.id.texture);
+        textureView = (TextureView) findViewById(R.id.texture1);
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
-        takePictureButton = (Button) view.findViewById(R.id.btn_takepicture1);
+        takePictureButton = (Button) findViewById(R.id.btn_takepicture1);
         assert takePictureButton != null;
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +107,73 @@ public class Second extends Fragment {
                 takePicture();
             }
         });
-        return view;
+
+        logout = (TextView) findViewById(R.id.Logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = MyApp.Domain + "logout/";
+                MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+                        new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response) {
+                                // response
+                                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                                Log.i("Verifcation","----> " + response);
+                                Intent intent = new Intent(MainFirstPage.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // error
+                                Log.d("Error.Response", error.toString());
+                            }
+                        }
+                ) {
+                    @Override
+                    protected Map<String, String> getParams()
+                    {
+
+
+                        return null;
+                    }
+                };
+                queue.add(postRequest);
+            }
+        });
+
+//        Something = (TextView) findViewById(R.id.st);
+//        Something.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String url = "http://132lilinwei.pythonanywhere.com/realapp/something/";
+//                MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+//                        new Response.Listener<String>()
+//                        {
+//                            @Override
+//                            public void onResponse(String response) {
+//                                // response
+//                                Toast.makeText(MainFirstPage.this,response,Toast.LENGTH_LONG).show();
+//                            }
+//                        },
+//                        new Response.ErrorListener()
+//                        {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//                                // error
+//                                Log.d("Error.Response", error.toString());
+//                            }
+//                        }
+//                );
+//                queue.add(postRequest);
+//
+//            }
+//        });
+
     }
     TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
         @Override
@@ -131,7 +215,7 @@ public class Second extends Fragment {
         @Override
         public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
             super.onCaptureCompleted(session, request, result);
-            Toast.makeText(getContext(), "Saved:" + file, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainFirstPage.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
             createCameraPreview();
         }
     };
@@ -155,7 +239,7 @@ public class Second extends Fragment {
             Log.e(TAG, "cameraDevice is null");
             return;
         }
-        CameraManager manager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
+        CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraDevice.getId());
             Size[] jpegSizes = null;
@@ -176,9 +260,17 @@ public class Second extends Fragment {
             captureBuilder.addTarget(reader.getSurface());
             captureBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
             // Orientation
-            int rotation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
+            int rotation = getWindowManager().getDefaultDisplay().getRotation();
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
-            final File file = new File(Environment.getExternalStorageDirectory()+"/pic.jpg");
+
+            Date c = Calendar.getInstance().getTime();
+            System.out.println("Current time => " + c);
+
+            SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmmssZ");
+            String formattedDate = df.format(c);
+            Log.i("The date: ", "    ->" + formattedDate);
+
+            final File file = new File(Environment.getExternalStorageDirectory()+"/" +"login" + formattedDate + ".jpg");
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
@@ -216,8 +308,79 @@ public class Second extends Fragment {
                 @Override
                 public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
-                    Toast.makeText(getContext(), "Saved:" + file, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainFirstPage.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
+                    String url = MyApp.Domain + "login/photo/";
+                    MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+                            new Response.Listener<String>()
+                            {
+                                @Override
+                                public void onResponse(String response) {
+                                    // response
+                                    if(response.equals("SUCCESS")) {
+                                        Toast.makeText(MainFirstPage.this, "Have received the image, please wait for 20s", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            },
+                            new Response.ErrorListener()
+                            {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    // error
+                                    Log.d("Error.Response", error.toString());
+                                }
+                            }
+                    ) {
+                        @Override
+                        protected Map<String,String> getParams(){
+                            Bitmap icon = BitmapFactory.decodeFile(file.getAbsolutePath());
+                            Log.i("pic", "      The path is " + file.getAbsolutePath());
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            icon.compress(Bitmap.CompressFormat.JPEG, 20, baos);
+                            byte[] b = baos.toByteArray();
+                            String encoded = Base64.encodeToString(b, Base64.DEFAULT);
+                            Map<String,String> map = new HashMap<String, String>();
+                            map.put("image", encoded);
+                            return map;
+                        }
+                    };
+                    queue.add(postRequest);
                     createCameraPreview();
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            String url1 = MyApp.Domain + "login/photoveri/";
+                            MyRequest postRequest1 = new MyRequest(Request.Method.POST, url1,
+                                    new Response.Listener<String>()
+                                    {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            // response
+                                            Toast.makeText(MainFirstPage.this, response, Toast.LENGTH_LONG).show();
+
+                                        }
+                                    },
+                                    new Response.ErrorListener()
+                                    {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            // error
+                                            Log.d("Error.Response", error.toString());
+                                        }
+                                    }
+                            ) {
+                                @Override
+                                protected Map<String,String> getParams(){
+                                    return null;
+                                }
+                            };
+                            queue.add(postRequest1);
+
+                        }
+                    }, 20000);
+
+
                 }
             };
             cameraDevice.createCaptureSession(outputSurfaces, new CameraCaptureSession.StateCallback() {
@@ -258,7 +421,7 @@ public class Second extends Fragment {
                 }
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
-                    Toast.makeText(getContext(), "Configuration change", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainFirstPage.this, "Configuration change", Toast.LENGTH_SHORT).show();
                 }
             }, null);
         } catch (CameraAccessException e) {
@@ -266,7 +429,7 @@ public class Second extends Fragment {
         }
     }
     private void openCamera() {
-        CameraManager manager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
+        CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         Log.e(TAG, "is camera open");
         try {
             cameraId = manager.getCameraIdList()[1];
@@ -275,8 +438,8 @@ public class Second extends Fragment {
             assert map != null;
             imageDimension = map.getOutputSizes(SurfaceTexture.class)[0];
             // Add permission for camera and let user grant the permission
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CAMERA_PERMISSION);
+            if (ActivityCompat.checkSelfPermission(MainFirstPage.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainFirstPage.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(MainFirstPage.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CAMERA_PERMISSION);
                 return;
             }
             manager.openCamera(cameraId, stateCallback, null);
@@ -311,8 +474,8 @@ public class Second extends Fragment {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 // close the app
-                Toast.makeText(getContext(), "Sorry!!!, you can't use this app without granting permission", Toast.LENGTH_LONG).show();
-                getActivity().finish();
+                Toast.makeText(MainFirstPage.this, "Sorry!!!, you can't use this app without granting permission", Toast.LENGTH_LONG).show();
+                finish();
             }
         }
     }
@@ -334,9 +497,6 @@ public class Second extends Fragment {
         stopBackgroundThread();
         super.onPause();
     }
+
+
 }
-
-
-
-
-

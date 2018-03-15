@@ -5,9 +5,6 @@ package com.example.yanglei.myapplication;
  */
 
 
-import android.widget.TextView;
-import android.widget.Toast;
-
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -15,7 +12,7 @@ import org.junit.Test;
 public class ProjectTest {
 
     MainActivity m = new MainActivity();
-    First r = new First();
+    RegisterFirstPage r = new RegisterFirstPage();
     @Test
     public void testLoginpass(){
         String state;

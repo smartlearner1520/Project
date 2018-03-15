@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/register"
+    tools:context="com.example.yanglei.myapplication.RegisterSecondPage">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="80dp"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/email11"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:maxLength="1"
+            android:inputType="number"
+            android:gravity="center"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="234dp" />
+
+        <EditText
+            android:id="@+id/email12"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:maxLength="1"
+            android:inputType="number"
+            android:gravity="center"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="234dp" />
+
+        <EditText
+            android:id="@+id/email13"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:maxLength="1"
+            android:inputType="number"
+            android:gravity="center"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="234dp" />
+
+        <EditText
+            android:id="@+id/email14"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:maxLength="1"
+            android:inputType="number"
+            android:gravity="center"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="234dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/notice2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="#8098c9"
+        android:textSize="15dp"
+        android:gravity="center"
+        android:layout_marginLeft="80dp"
+        android:text="If you did not receive the email\n Please press resend button"
+        />
+
+    <Button
+        android:id="@+id/resend2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:gravity="center"
+        android:text="Resend"
+        android:background="@drawable/buttonwhite"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/verification2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:gravity="center"
+        android:text="Continue"
+        android:background="@drawable/buttonwhite"
+        android:textColor="@color/white" />
+
+</LinearLayout>

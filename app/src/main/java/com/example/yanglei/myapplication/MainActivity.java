@@ -1,11 +1,12 @@
 package com.example.yanglei.myapplication;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,7 +17,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,13 +28,45 @@ public class MainActivity extends AppCompatActivity {
     private String id,password;
     private boolean result =false;
     private Button login;
+    MyApp myapp = MyApp.get();
+    final RequestQueue queue = myapp.getRequestQueue();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MediaPlayer music= MediaPlayer.create(MainActivity.this,R.raw.Something_Just_Like_This);
-        music.start();
+
+        String url = MyApp.Domain + "logout/";
+        MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+
+
+                return null;
+            }
+        };
+        queue.add(postRequest);
+
+
+//        MediaPlayer music= MediaPlayer.create(MainActivity.this,R.raw.Something_Just_Like_This);
+//        music.start();
         final RequestQueue queue = Volley.newRequestQueue(this);
         ID = (EditText) findViewById(R.id.username);
         Password = (EditText) findViewById(R.id.password);
@@ -42,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = "http://132lilinwei.pythonanywhere.com/realapp/login/";
+                String url = MyApp.Domain+ "login/basic/";
                 id=ID.getText().toString();
                 password=Password.getText().toString();
                 if(NotEmpty(id,password)) {
@@ -53,9 +85,11 @@ public class MainActivity extends AppCompatActivity {
                                     // response
                                     //SUCCESS, FAIL
                                     result = Check(response);
+                                    Log.i("Response","   -->" + response);
                                     if (result) {
-                                        result = false; // to protect the login activity
-                                        Intent intent = new Intent(MainActivity.this, login.class);
+                                        result = false; // to protect the MainFirstPage activity
+                                        password="";
+                                        Intent intent = new Intent(MainActivity.this, MainSecondPage.class);
                                         startActivity(intent);
 
                                     } else {
@@ -91,38 +125,38 @@ public class MainActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(MainActivity.this, Register.class);
+                Intent intent1 = new Intent(MainActivity.this, RegisterFirstPage.class);
                 startActivity(intent1);
             }
         });
 
-        Something = (TextView) findViewById(R.id.Something);
-        Something.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = "http://132lilinwei.pythonanywhere.com/realapp/something/";
-                MyRequest postRequest = new MyRequest(Request.Method.POST, url,
-                        new Response.Listener<String>()
-                        {
-                            @Override
-                            public void onResponse(String response) {
-                                // response
-                                Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
-                            }
-                        },
-                        new Response.ErrorListener()
-                        {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // error
-                                Log.d("Error.Response", error.toString());
-                            }
-                        }
-                );
-                queue.add(postRequest);
-
-            }
-        });
+//        Something = (TextView) findViewById(R.id.Something);
+//        Something.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String url = "http://132lilinwei.pythonanywhere.com/realapp/something/";
+//                MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+//                        new Response.Listener<String>()
+//                        {
+//                            @Override
+//                            public void onResponse(String response) {
+//                                // response
+//                                Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
+//                            }
+//                        },
+//                        new Response.ErrorListener()
+//                        {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//                                // error
+//                                Log.d("Error.Response", error.toString());
+//                            }
+//                        }
+//                );
+//                queue.add(postRequest);
+//
+//            }
+//        });
 
 
     }

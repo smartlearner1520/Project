@@ -1,11 +1,18 @@
 package com.example.yanglei.myapplication;
 
 import android.app.Application;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import java.util.Map;
@@ -18,7 +25,7 @@ public class MyApp extends Application {
     private static MyApp _instance;
     private RequestQueue _requestQueue;
     private SharedPreferences _preferences;
-
+    public static String Domain = "http://verifie.herokuapp.com/realapp/";
     public static MyApp get() {
         return _instance;
     }
@@ -75,5 +82,7 @@ public class MyApp extends Application {
             headers.put(COOKIE_KEY, builder.toString());
         }
     }
+
+
 
 }
