@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,181 +16,173 @@
         android:layout_marginBottom="10dp"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="30sp" />
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_text"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/t1"
-            android:text="@string/user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:paddingLeft="5dp"
-            android:textSize="15dp"
-            android:paddingRight="5dp"
-            android:textColor="@color/white" />
-
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/username"
-            android:inputType="textEmailAddress"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textSize="20dp"
-            android:backgroundTint="#b4b6b9"
-            android:drawableLeft="@drawable/user"
-            android:textColor="@color/white" />
+            android:layout_height="40dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_white"
+            android:backgroundTint="#826056"
+            android:drawableLeft="@drawable/email"
+            android:drawablePadding="10dp"
+            android:hint="Enter your Email"
+            android:paddingLeft="15dp"
+            android:paddingStart="15dp"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/untext"
-            android:paddingLeft="5dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#c417ccd6" />
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:paddingLeft="5dp"
+            android:text="@string/Username"
+            android:textColor="@color/white1" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_text"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:text="Password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:paddingLeft="5dp"
-            android:textSize="15dp"
-            android:paddingRight="5dp"
-            android:textColor="@color/white" />
-
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/password"
-            android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="5dp"
-            android:textSize="20dp"
-            android:backgroundTint="#8098c9"
-            android:drawableLeft="@drawable/pw1"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/rounded_white"
+            android:backgroundTint="#826056"
+            android:drawableLeft="@drawable/lock"
+            android:drawablePadding="5dp"
+            android:hint="@string/Password"
+            android:inputType="textPassword"
+            android:paddingLeft="15dp"
+            android:paddingStart="15dp"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/pwtext"
-            android:paddingLeft="5dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#c417ccd6" />
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:paddingLeft="5dp"
+            android:text="@string/Password"
+            android:textColor="@color/white1"/>
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_text"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/NRICtxt"
-            android:text="NRIC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:paddingLeft="5dp"
-            android:textSize="15dp"
-            android:paddingRight="5dp"
-            android:textColor="@color/white" />
-
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/NRIC"
             android:inputType="textPersonName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
+            android:text="NRIC"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="5dp"
-            android:textSize="20dp"
-            android:backgroundTint="#8098c9"
-            android:drawableLeft="@drawable/ic"
-            android:textColor="@color/white" />
+            android:textColor="@color/white1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/rounded_white"
+            android:backgroundTint="#826056"
+            android:drawableLeft="@drawable/lock"
+            android:drawablePadding="5dp"
+            android:hint="@string/Password"
+            android:paddingLeft="15dp"
+            android:paddingStart="15dp"
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/ictext"
-            android:paddingLeft="5dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#c417ccd6" />
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:paddingLeft="5dp"
+            android:text="@string/nric"
+            android:textColor="@color/white1"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_text"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/Phonetxt"
-            android:text="Moblie Phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:paddingLeft="5dp"
-            android:textSize="15dp"
-            android:paddingRight="5dp"
-            android:textColor="@color/white"/>
-
         <LinearLayout
-            android:layout_width="323dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="50dp"
             android:weightSum="1">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/CC"
                 android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#8098c9"
-                android:layout_marginBottom="5dp"
-                android:drawableLeft="@drawable/mp"
-                android:inputType="phone" />
-
-            <EditText
-                android:id="@+id/Phone"
+                android:drawableLeft="@drawable/phoneicon"
                 android:inputType="phone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:textSize="20dp"
-                android:layout_marginBottom="3dp"
-                android:backgroundTint="#8098c9"
-                android:textColor="@color/white"
-                android:layout_weight="1.01" />
+                android:textColor="@color/white1"
+                android:layout_height="40dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/rounded_white"
+                android:backgroundTint="#826056"
+                android:drawablePadding="5dp"
+                android:hint="+65"
+                android:paddingLeft="15dp"
+                android:paddingStart="15dp"
+                android:textSize="14sp"/>
+
+            <AutoCompleteTextView
+                android:id="@+id/Phone"
+                android:layout_width="192dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_weight="1.01"
+                android:background="@drawable/rounded_white"
+                android:backgroundTint="#826056"
+                android:drawableLeft="@drawable/phoneicon"
+                android:drawablePadding="5dp"
+                android:hint="Phone number"
+                android:inputType="phone"
+                android:paddingLeft="15dp"
+                android:paddingStart="15dp"
+                android:textColor="@color/white1"
+                android:textSize="14sp" />/>
 
         </LinearLayout>
 
@@ -215,7 +206,9 @@
         android:layout_marginRight="25dp"
         android:gravity="center"
         android:text="Continue"
-        android:background="@drawable/buttonwhite"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_button"/>
 
 </LinearLayout>

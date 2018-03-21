@@ -3,32 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/camera1"
     tools:context="com.example.yanglei.myapplication.RegisterForthPage">
-    <TextureView
-        android:id="@+id/texture"
-        android:layout_width="300dp"
-        android:layout_height="360dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextureView
+            android:id="@+id/texture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"/>
 
-    <TextView
-        android:id="@+id/pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/btn_takepicture1"
-        android:layout_alignLeft="@+id/texture"
-        android:layout_alignStart="@+id/texture"
-        android:layout_marginBottom="100dp"
-        android:layout_marginLeft="9dp"
-        android:layout_marginStart="9dp"
-        android:textColor="@color/white"
-        android:textSize="18dp"
-        android:text="Please Take 3 pictures! Left 3 pics."
-        android:layout_alignRight="@+id/texture"
-        android:layout_alignEnd="@+id/texture" />
+        <TextView
+            android:id="@+id/pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="9dp"
+            android:text="Please Take 3 pictures! Left 3 pics."
+            android:textColor="@color/white1"
+            android:textSize="20dp"
+            tools:layout_editor_absoluteX="297dp"
+            tools:layout_editor_absoluteY="514dp" />
+    </FrameLayout>
     <Button
         android:id="@+id/btn_takepicture1"
         android:layout_width="50dp"
@@ -38,6 +41,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"/>
-
 
 </RelativeLayout>

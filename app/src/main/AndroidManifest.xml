@@ -16,7 +16,7 @@
         android:label=""
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.AppCompat">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,13 +25,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterFirstPage" />
-        <activity android:name=".SwipeView" />
         <activity android:name=".RegisterForthPage" />
         <activity android:name=".MainFirstPage" />
         <activity android:name=".RegisterSecondPage" />
         <activity android:name=".RegisterThridPage" />
         <activity android:name=".MainSecondPage" />
         <activity android:name=".MainThirdPage"></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
