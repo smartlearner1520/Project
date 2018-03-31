@@ -1,5 +1,6 @@
 package com.example.yanglei.myapplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Base64;
+import android.view.KeyEvent;
 import android.view.View;
 import android.Manifest;
 import android.content.Context;
@@ -63,13 +65,14 @@ import java.util.Map;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 
-public class MainFirstPage extends AppCompatActivity {
+public class LoginThirdPage extends AppCompatActivity {
     private static final String TAG = "yl";
     private TextView logout,Something;
     private Button takePictureButton;
     private TextureView textureView;
     private String filepath = "";
     private static int ID=0;
+    ProgressDialog progressDialog;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 270);
@@ -94,7 +97,7 @@ public class MainFirstPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_third_page);
 
         textureView = (TextureView) findViewById(R.id.texture1);
         assert textureView != null;
@@ -112,6 +115,12 @@ public class MainFirstPage extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog = new ProgressDialog(LoginThirdPage.this);
+                progressDialog.setMessage("Loading..."); // Setting Message
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                progressDialog.show(); // Display Progress Dialog
+                progressDialog.setCancelable(false);
+
                 String url = MyApp.Domain + "logout/";
                 MyRequest postRequest = new MyRequest(Request.Method.POST, url,
                         new Response.Listener<String>()
@@ -119,9 +128,10 @@ public class MainFirstPage extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 // response
+                                progressDialog.dismiss();
                                 Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
                                 Log.i("Verifcation","----> " + response);
-                                Intent intent = new Intent(MainFirstPage.this, MainActivity.class);
+                                Intent intent = new Intent(LoginThirdPage.this, MainActivity.class);
                                 startActivity(intent);
                             }
                         },
@@ -157,7 +167,7 @@ public class MainFirstPage extends AppCompatActivity {
 //                            @Override
 //                            public void onResponse(String response) {
 //                                // response
-//                                Toast.makeText(MainFirstPage.this,response,Toast.LENGTH_LONG).show();
+//                                Toast.makeText(login_third_page.this,response,Toast.LENGTH_LONG).show();
 //                            }
 //                        },
 //                        new Response.ErrorListener()
@@ -215,7 +225,7 @@ public class MainFirstPage extends AppCompatActivity {
         @Override
         public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
             super.onCaptureCompleted(session, request, result);
-            Toast.makeText(MainFirstPage.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginThirdPage.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
             createCameraPreview();
         }
     };
@@ -308,7 +318,13 @@ public class MainFirstPage extends AppCompatActivity {
                 @Override
                 public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
-                    Toast.makeText(MainFirstPage.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginThirdPage.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
+                    progressDialog = new ProgressDialog(LoginThirdPage.this);
+                    progressDialog.setMessage("Loading..."); // Setting Message
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(true);
+
                     String url = MyApp.Domain + "login/photo/";
                     MyRequest postRequest = new MyRequest(Request.Method.POST, url,
                             new Response.Listener<String>()
@@ -317,7 +333,7 @@ public class MainFirstPage extends AppCompatActivity {
                                 public void onResponse(String response) {
                                     // response
                                     if(response.equals("SUCCESS")) {
-                                        Toast.makeText(MainFirstPage.this, "Have received the image, please wait for 20s", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(LoginThirdPage.this, "Have received the image, please wait for 20s", Toast.LENGTH_LONG).show();
                                     }
                                 }
                             },
@@ -357,8 +373,13 @@ public class MainFirstPage extends AppCompatActivity {
                                         @Override
                                         public void onResponse(String response) {
                                             // response
-                                            Toast.makeText(MainFirstPage.this, response, Toast.LENGTH_LONG).show();
-
+                                            progressDialog.dismiss();
+                                            Toast.makeText(LoginThirdPage.this, response, Toast.LENGTH_LONG).show();
+                                            logout.setText("Logout");
+                                            if(response.equals("SUCCESS")){
+                                                Intent intent = new Intent(LoginThirdPage.this,LoginSuccessfully.class);
+                                                startActivity(intent);
+                                            }
                                         }
                                     },
                                     new Response.ErrorListener()
@@ -421,7 +442,7 @@ public class MainFirstPage extends AppCompatActivity {
                 }
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
-                    Toast.makeText(MainFirstPage.this, "Configuration change", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginThirdPage.this, "Configuration change", Toast.LENGTH_SHORT).show();
                 }
             }, null);
         } catch (CameraAccessException e) {
@@ -438,8 +459,8 @@ public class MainFirstPage extends AppCompatActivity {
             assert map != null;
             imageDimension = map.getOutputSizes(SurfaceTexture.class)[0];
             // Add permission for camera and let user grant the permission
-            if (ActivityCompat.checkSelfPermission(MainFirstPage.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainFirstPage.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(MainFirstPage.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CAMERA_PERMISSION);
+            if (ActivityCompat.checkSelfPermission(LoginThirdPage.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(LoginThirdPage.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(LoginThirdPage.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CAMERA_PERMISSION);
                 return;
             }
             manager.openCamera(cameraId, stateCallback, null);
@@ -474,7 +495,7 @@ public class MainFirstPage extends AppCompatActivity {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 // close the app
-                Toast.makeText(MainFirstPage.this, "Sorry!!!, you can't use this app without granting permission", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginThirdPage.this, "Sorry!!!, you can't use this app without granting permission", Toast.LENGTH_LONG).show();
                 finish();
             }
         }
@@ -498,5 +519,56 @@ public class MainFirstPage extends AppCompatActivity {
         super.onPause();
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d("yl", "onKeyDown Called");
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
+
+    @Override
+    public void onBackPressed() {
+        Log.d("yl", "onBackPressed Called");
+        Logout();
+        Intent intent = new Intent(LoginThirdPage.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void Logout(){
+        String url = MyApp.Domain + "logout/";
+        MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+
+
+                return null;
+            }
+        };
+        queue.add(postRequest);
+    }
 }

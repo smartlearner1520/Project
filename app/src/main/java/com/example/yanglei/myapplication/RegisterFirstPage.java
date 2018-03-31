@@ -1,10 +1,12 @@
 package com.example.yanglei.myapplication;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,12 +36,15 @@ public class RegisterFirstPage extends AppCompatActivity {
     private String cc;
     private Button button;
     private Boolean isvalid=true;
+    MyApp myapp = MyApp.get();
+    final RequestQueue queue = myapp.getRequestQueue();
+    ProgressDialog progressDialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first);
+        setContentView(R.layout.register_first_page);
 
 
         username = (EditText) findViewById(R.id.username);
@@ -55,8 +60,7 @@ public class RegisterFirstPage extends AppCompatActivity {
         Phone= (EditText) findViewById(R.id.Phone);
         button = (Button) findViewById(R.id.Next);
 
-        MyApp myapp = MyApp.get();
-        final RequestQueue queue = myapp.getRequestQueue();
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -72,7 +76,7 @@ public class RegisterFirstPage extends AppCompatActivity {
                 }
                 pw = password.getText().toString();
                 if(!pw.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")){
-                    pwtext.setText("At least 1 lower and upper case letter\n  At least 8 spaces");
+                    pwtext.setText("At least One lower and upper case letter\nAt least 8 spaces");
                     Log.i("username","    -->invalid password");
                     isvalid=false;
                 } else{
@@ -124,6 +128,13 @@ public class RegisterFirstPage extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 } else{
                     Log.i("Output","Have completed the personal detail!");
+
+                    progressDialog = new ProgressDialog(RegisterFirstPage.this);
+                    progressDialog.setMessage("Loading..."); // Setting Message
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(true);
+
                     String url = MyApp.Domain+ "registration/basic/";
                     MyRequest postRequest = new MyRequest(Request.Method.POST, url,
                             new Response.Listener<String>()
@@ -131,6 +142,7 @@ public class RegisterFirstPage extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     // response
+                                    progressDialog.dismiss();
                                     if(!response.equals("USERNAME EXISTS") && isvalid){
                                         untext.setText("");
                                         pwtext.setText("");
@@ -179,5 +191,57 @@ public class RegisterFirstPage extends AppCompatActivity {
         }else{
             return false;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d("yl", "onKeyDown Called");
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Log.d("yl", "onBackPressed Called");
+        Logout();
+        Intent intent = new Intent(RegisterFirstPage.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void Logout(){
+        String url = MyApp.Domain + "logout/";
+        MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+
+
+                return null;
+            }
+        };
+        queue.add(postRequest);
     }
 }

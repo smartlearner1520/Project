@@ -1,12 +1,14 @@
 package com.example.yanglei.myapplication;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,39 +32,14 @@ public class MainActivity extends AppCompatActivity {
     private Button login;
     MyApp myapp = MyApp.get();
     final RequestQueue queue = myapp.getRequestQueue();
+    ProgressDialog progressDialog;
+    private int Presstime =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        String url = MyApp.Domain + "logout/";
-        MyRequest postRequest = new MyRequest(Request.Method.POST, url,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        // response
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        Log.d("Error.Response", error.toString());
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams()
-            {
-
-
-                return null;
-            }
-        };
-        queue.add(postRequest);
+        Logout();
 
 
 //        MediaPlayer music= MediaPlayer.create(MainActivity.this,R.raw.Something_Just_Like_This);
@@ -71,25 +48,36 @@ public class MainActivity extends AppCompatActivity {
         ID = (EditText) findViewById(R.id.username);
         Password = (EditText) findViewById(R.id.password);
         login =(Button) findViewById(R.id.loginButton);
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String url = MyApp.Domain+ "login/basic/";
                 id=ID.getText().toString();
                 password=Password.getText().toString();
                 if(NotEmpty(id,password)) {
+
+                    progressDialog = new ProgressDialog(MainActivity.this);
+                    progressDialog.setMessage("Loading..."); // Setting Message
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(true);
+
                     MyRequest postRequest = new MyRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
                                     // response
                                     //SUCCESS, FAIL
+                                    progressDialog.dismiss();
+                                    Log.i("Response","   dismiss" );
                                     result = Check(response);
                                     Log.i("Response","   -->" + response);
                                     if (result) {
-                                        result = false; // to protect the MainFirstPage activity
+                                        result = false; // to protect the login_third_page activity
                                         password="";
-                                        Intent intent = new Intent(MainActivity.this, MainSecondPage.class);
+                                        Intent intent = new Intent(MainActivity.this, LoginFirstPage.class);
                                         startActivity(intent);
 
                                     } else {
@@ -192,5 +180,66 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d("yl", "onKeyDown Called");
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Log.d("yl", "onBackPressed Called");
+        new AlertDialog.Builder(this,R.style.MyDialogTheme)
+                .setMessage("Are you sure you want to exit?")
+                .setCancelable(true)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Logout();
+                        Intent startMain = new Intent(Intent.ACTION_MAIN);
+                        startMain.addCategory(Intent.CATEGORY_HOME);
+                        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(startMain);
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    public void Logout(){
+        String url = MyApp.Domain + "logout/";
+        MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+
+
+                return null;
+            }
+        };
+        queue.add(postRequest);
+    }
 
 }

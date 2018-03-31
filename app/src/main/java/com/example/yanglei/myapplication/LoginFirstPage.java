@@ -1,5 +1,6 @@
 package com.example.yanglei.myapplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,18 +22,19 @@ import com.android.volley.VolleyError;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainSecondPage extends AppCompatActivity {
+public class LoginFirstPage extends AppCompatActivity {
     private EditText n1,n2,n3,n4;
     private Button resend,verf;
     private TextView logout;
     String num,i1,i2,i3,i4;
+    ProgressDialog progressDialog;
     MyApp myapp = MyApp.get();
     final RequestQueue queue = myapp.getRequestQueue();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_second_page);
+        setContentView(R.layout.login_first_page);
 
         resend = (Button) findViewById(R.id.resend2);
         verf = (Button) findViewById(R.id.verification2);
@@ -131,6 +133,11 @@ public class MainSecondPage extends AppCompatActivity {
         resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog = new ProgressDialog(LoginFirstPage.this);
+                progressDialog.setMessage("Loading..."); // Setting Message
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                progressDialog.show(); // Display Progress Dialog
+                progressDialog.setCancelable(true);
                 String url = MyApp.Domain + "login/email/";
                 MyRequest postRequest = new MyRequest(Request.Method.POST, url,
                         new Response.Listener<String>()
@@ -138,6 +145,7 @@ public class MainSecondPage extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 // response
+                                progressDialog.dismiss();
                             }
                         },
                         new Response.ErrorListener()
@@ -168,6 +176,12 @@ public class MainSecondPage extends AppCompatActivity {
                 i4 = n4.getText().toString();
                 num = i1+ i2+ i3+ i4;
                 Log.i("verf"," the number is " + num);
+
+                progressDialog = new ProgressDialog(LoginFirstPage.this);
+                progressDialog.setMessage("Loading..."); // Setting Message
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                progressDialog.show(); // Display Progress Dialog
+                progressDialog.setCancelable(true);
                 String url = MyApp.Domain + "login/emailveri/";
                 MyRequest postRequest = new MyRequest(Request.Method.POST, url,
                         new Response.Listener<String>()
@@ -175,8 +189,9 @@ public class MainSecondPage extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 // response
+                                progressDialog.dismiss();
                                 if(response.equals("SUCCESS")){
-                                    Intent intent = new Intent(MainSecondPage.this,MainThirdPage.class);
+                                    Intent intent = new Intent(LoginFirstPage.this,LoginSecondPage.class);
                                     startActivity(intent);
                                 }
                                 Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
@@ -205,41 +220,57 @@ public class MainSecondPage extends AppCompatActivity {
             }
         });
 
-//        logout = (TextView) findViewById(R.id.Logout2);
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String url = MyApp.Domain + "logout/";
-//                MyRequest postRequest = new MyRequest(Request.Method.POST, url,
-//                        new Response.Listener<String>()
-//                        {
-//                            @Override
-//                            public void onResponse(String response) {
-//                                // response
-//                                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
-//                                Intent intent = new Intent(MainSecondPage.this, MainActivity.class);
-//                                startActivity(intent);
-//                            }
-//                        },
-//                        new Response.ErrorListener()
-//                        {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//                                // error
-//                                Log.d("Error.Response", error.toString());
-//                            }
-//                        }
-//                ) {
-//                    @Override
-//                    protected Map<String, String> getParams()
-//                    {
-//
-//
-//                        return null;
-//                    }
-//                };
-//                queue.add(postRequest);
-//            }
-//        });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d("yl", "onKeyDown Called");
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Log.d("yl", "onBackPressed Called");
+        Logout();
+        Intent intent = new Intent(LoginFirstPage.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void Logout(){
+        String url = MyApp.Domain + "logout/";
+        MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+
+
+                return null;
+            }
+        };
+        queue.add(postRequest);
     }
 }

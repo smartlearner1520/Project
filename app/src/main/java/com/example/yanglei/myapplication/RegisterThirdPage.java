@@ -1,5 +1,6 @@
 package com.example.yanglei.myapplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,17 +21,18 @@ import com.android.volley.VolleyError;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisterThridPage extends AppCompatActivity {
+public class RegisterThirdPage extends AppCompatActivity {
         private EditText n1,n2,n3,n4;
         private Button resend,sms;
         String num,i1,i2,i3,i4;
+    ProgressDialog progressDialog;
         MyApp myapp = MyApp.get();
         final RequestQueue queue = myapp.getRequestQueue();
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.register_thrid_page);
+            setContentView(R.layout.register_third_page);
 
             resend = (Button) findViewById(R.id.resend1);
             sms = (Button) findViewById(R.id.verification1);
@@ -129,6 +131,13 @@ public class RegisterThridPage extends AppCompatActivity {
             resend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    progressDialog = new ProgressDialog(RegisterThirdPage.this);
+                    progressDialog.setMessage("Loading..."); // Setting Message
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(true);
+
                     String url = MyApp.Domain + "registration/phone/";
                     MyRequest postRequest = new MyRequest(Request.Method.POST, url,
                             new Response.Listener<String>()
@@ -136,6 +145,7 @@ public class RegisterThridPage extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     Log.i("R 3rd page resend", response);
+                                    progressDialog.dismiss();
                                 }
                             },
                             new Response.ErrorListener()
@@ -167,6 +177,13 @@ public class RegisterThridPage extends AppCompatActivity {
                     i3 = n3.getText().toString();
                     i4 = n4.getText().toString();
                     num = i1+ i2+ i3+ i4;
+
+                    progressDialog = new ProgressDialog(RegisterThirdPage.this);
+                    progressDialog.setMessage("Loading..."); // Setting Message
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(true);
+
                     Log.i("verf"," the number is " + num);
                     String url = MyApp.Domain + "registration/phoneveri/";
                     MyRequest postRequest = new MyRequest(Request.Method.POST, url,
@@ -175,9 +192,10 @@ public class RegisterThridPage extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     // response
+                                    progressDialog.dismiss();
                                     Log.i("R 3rd page sms", response);
                                     if(response.equals("SUCCESS")){
-                                        Intent intent = new Intent(RegisterThridPage.this,RegisterForthPage.class);
+                                        Intent intent = new Intent(RegisterThirdPage.this,RegisterForthPage.class);
                                         startActivity(intent);
                                     }
                                     Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
@@ -207,5 +225,58 @@ public class RegisterThridPage extends AppCompatActivity {
             });
 
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d("yl", "onKeyDown Called");
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Log.d("yl", "onBackPressed Called");
+        Logout();
+        Intent intent = new Intent(RegisterThirdPage.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void Logout(){
+        String url = MyApp.Domain + "logout/";
+        MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+
+
+                return null;
+            }
+        };
+        queue.add(postRequest);
     }
 }

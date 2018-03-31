@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/white</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+
+    </style>
+
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
     </style>
 
 </resources>

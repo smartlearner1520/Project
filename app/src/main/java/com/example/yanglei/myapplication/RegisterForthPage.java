@@ -1,6 +1,7 @@
 package com.example.yanglei.myapplication;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.view.KeyEvent;
 import android.view.View;
 import android.Manifest;
 import android.content.Context;
@@ -70,6 +72,7 @@ public class RegisterForthPage extends AppCompatActivity {
     private Button takePictureButton;
     private TextView pic;
     private String pictext;
+    ProgressDialog progressDialog;
     private TextureView textureView;;
     MyApp myapp = MyApp.get();
     int count=1;
@@ -97,7 +100,7 @@ public class RegisterForthPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
+        setContentView(R.layout.register_forth_page);
 
         pic = (TextView) findViewById(R.id.pic);
         textureView = (TextureView) findViewById(R.id.texture);
@@ -250,6 +253,13 @@ public class RegisterForthPage extends AppCompatActivity {
                     RegisterFirstPage.NRIC="";
                     RegisterFirstPage.PN="";
                     //TODO once successfully register, the rest should be clear up.
+
+                    progressDialog = new ProgressDialog(RegisterForthPage.this);
+                    progressDialog.setMessage("Loading..."); // Setting Message
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(true);
+
                     String url = MyApp.Domain + "registration/photo/";
                     MyRequest postRequest = new MyRequest(Request.Method.POST, url,
                             new Response.Listener<String>()
@@ -257,6 +267,7 @@ public class RegisterForthPage extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     // response
+                                    progressDialog.dismiss();
                                     Toast.makeText(RegisterForthPage.this,response,Toast.LENGTH_SHORT).show();
                                     //TODO add intent once the pic verification is successful
                                     if(response.equals("SUCCESS")){
@@ -411,6 +422,58 @@ public class RegisterForthPage extends AppCompatActivity {
         //closeCamera();
         stopBackgroundThread();
         super.onPause();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d("yl", "onKeyDown Called");
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Log.d("yl", "onBackPressed Called");
+        Logout();
+        Intent intent = new Intent(RegisterForthPage.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void Logout(){
+        String url = MyApp.Domain + "logout/";
+        MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+
+
+                return null;
+            }
+        };
+        queue.add(postRequest);
     }
 }
 

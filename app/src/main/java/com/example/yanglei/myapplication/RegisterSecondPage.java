@@ -1,5 +1,6 @@
 package com.example.yanglei.myapplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class RegisterSecondPage extends AppCompatActivity {
     private Button resend,verf;
     private TextView logout;
     String num,i1,i2,i3,i4;
+    ProgressDialog progressDialog;
     MyApp myapp = MyApp.get();
     final RequestQueue queue = myapp.getRequestQueue();
 
@@ -131,6 +133,11 @@ public class RegisterSecondPage extends AppCompatActivity {
         resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog = new ProgressDialog(RegisterSecondPage.this);
+                progressDialog.setMessage("Loading..."); // Setting Message
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                progressDialog.show(); // Display Progress Dialog
+                progressDialog.setCancelable(true);
                 String url = MyApp.Domain + "registration/email/";
                 MyRequest postRequest = new MyRequest(Request.Method.POST, url,
                         new Response.Listener<String>()
@@ -138,7 +145,7 @@ public class RegisterSecondPage extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 // response
-
+                                progressDialog.dismiss();
                                 Log.i("R 2nd page resend", response);
                                 Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
                             }
@@ -170,6 +177,13 @@ public class RegisterSecondPage extends AppCompatActivity {
                 i3 = n3.getText().toString();
                 i4 = n4.getText().toString();
                 num = i1+ i2+ i3+ i4;
+
+                progressDialog = new ProgressDialog(RegisterSecondPage.this);
+                progressDialog.setMessage("Loading..."); // Setting Message
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                progressDialog.show(); // Display Progress Dialog
+                progressDialog.setCancelable(true);
+
                 Log.i("verf"," the number is " + num);
                 String url = MyApp.Domain + "registration/emailveri/";
                 MyRequest postRequest = new MyRequest(Request.Method.POST, url,
@@ -178,9 +192,10 @@ public class RegisterSecondPage extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 // response
+                                progressDialog.dismiss();
                                 Log.i("R 2nd page verf", response);
                                 if(response.equals("SUCCESS")){
-                                    Intent intent = new Intent(RegisterSecondPage.this,RegisterThridPage.class);
+                                    Intent intent = new Intent(RegisterSecondPage.this,RegisterThirdPage.class);
                                     startActivity(intent);
                                 }
                                 Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
@@ -209,41 +224,93 @@ public class RegisterSecondPage extends AppCompatActivity {
             }
         });
 
-        logout = (TextView) findViewById(R.id.Logout3);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = MyApp.Domain + "logout/";
-                MyRequest postRequest = new MyRequest(Request.Method.POST, url,
-                        new Response.Listener<String>()
-                        {
-                            @Override
-                            public void onResponse(String response) {
-                                // response
-                                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(RegisterSecondPage.this, MainActivity.class);
-                                startActivity(intent);
-                            }
-                        },
-                        new Response.ErrorListener()
-                        {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // error
-                                Log.d("Error.Response", error.toString());
-                            }
-                        }
-                ) {
+//        logout = (TextView) findViewById(R.id.Logout3);
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String url = MyApp.Domain + "logout/";
+//                MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+//                        new Response.Listener<String>()
+//                        {
+//                            @Override
+//                            public void onResponse(String response) {
+//                                // response
+//                                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+//                                Intent intent = new Intent(register_second_page.this, MainActivity.class);
+//                                startActivity(intent);
+//                            }
+//                        },
+//                        new Response.ErrorListener()
+//                        {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//                                // error
+//                                Log.d("Error.Response", error.toString());
+//                            }
+//                        }
+//                ) {
+//                    @Override
+//                    protected Map<String, String> getParams()
+//                    {
+//
+//
+//                        return null;
+//                    }
+//                };
+//                queue.add(postRequest);
+//            }
+//        });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d("yl", "onKeyDown Called");
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Log.d("yl", "onBackPressed Called");
+        Logout();
+        Intent intent = new Intent(RegisterSecondPage.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void Logout(){
+        String url = MyApp.Domain + "logout/";
+        MyRequest postRequest = new MyRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
                     @Override
-                    protected Map<String, String> getParams()
-                    {
-
-
-                        return null;
+                    public void onResponse(String response) {
+                        // response
+                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
                     }
-                };
-                queue.add(postRequest);
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+
+
+                return null;
             }
-        });
+        };
+        queue.add(postRequest);
     }
 }

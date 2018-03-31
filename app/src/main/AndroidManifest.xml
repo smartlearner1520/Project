@@ -12,9 +12,9 @@
     <application
         android:name=".MyApp"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label=""
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -25,13 +25,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterFirstPage" />
-        <activity android:name=".SwipeView" />
         <activity android:name=".RegisterForthPage" />
-        <activity android:name=".MainFirstPage" />
+        <activity android:name=".LoginThirdPage" />
         <activity android:name=".RegisterSecondPage" />
-        <activity android:name=".RegisterThridPage" />
-        <activity android:name=".MainSecondPage" />
-        <activity android:name=".MainThirdPage"></activity>
+        <activity android:name=".RegisterThirdPage" />
+        <activity android:name=".LoginFirstPage" />
+        <activity android:name=".LoginSecondPage" />
+        <activity android:name=".LoginSuccessfully"></activity>
     </application>
 
 </manifest>

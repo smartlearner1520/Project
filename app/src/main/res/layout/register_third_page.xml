@@ -12,10 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="250dp"
-        android:layout_marginLeft="80dp"
+        android:layout_marginLeft="100dp"
         android:orientation="horizontal">
         <EditText
-            android:id="@+id/email11"
+            android:id="@+id/sms1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:ems="10"
@@ -26,7 +26,7 @@
             tools:layout_editor_absoluteY="234dp" />
 
         <EditText
-            android:id="@+id/email12"
+            android:id="@+id/sms2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:ems="10"
@@ -37,7 +37,7 @@
             tools:layout_editor_absoluteY="234dp" />
 
         <EditText
-            android:id="@+id/email13"
+            android:id="@+id/sms3"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:ems="10"
@@ -48,7 +48,7 @@
             tools:layout_editor_absoluteY="234dp" />
 
         <EditText
-            android:id="@+id/email14"
+            android:id="@+id/sms4"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:ems="10"
@@ -61,19 +61,19 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/notice2"
+        android:id="@+id/notice1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textColor="#8098c9"
         android:textSize="15dp"
         android:gravity="center"
-        android:layout_marginLeft="80dp"
-        android:text="If you did not receive the email\n Please press resend button"
+        android:layout_marginLeft="100dp"
+        android:text="If you did not receive the sms\n Please press resend button"
         />
 
     <Button
-        android:id="@+id/resend2"
+        android:id="@+id/resend1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -85,7 +85,7 @@
         android:textColor="@color/white" />
 
     <Button
-        android:id="@+id/verification2"
+        android:id="@+id/verification1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
