@@ -29,7 +29,7 @@
         android:background="@drawable/rounded_white"
         android:drawableLeft="@drawable/username"
         android:drawablePadding="15dp"
-        android:hint="@string/Username"
+        android:hint="Email"
         android:inputType="textEmailAddress"
         android:paddingBottom="12dp"
         android:paddingTop="12dp"

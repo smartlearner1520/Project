@@ -31,7 +31,9 @@
         <activity android:name=".RegisterThirdPage" />
         <activity android:name=".LoginFirstPage" />
         <activity android:name=".LoginSecondPage" />
-        <activity android:name=".LoginSuccessfully"></activity>
+        <activity android:name=".LoginSuccessfully" />
+        <activity android:name=".LoginDigitalCard">
+        </activity>
     </application>
 
 </manifest>

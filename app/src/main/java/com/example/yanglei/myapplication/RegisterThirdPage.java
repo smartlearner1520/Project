@@ -61,7 +61,7 @@ public class RegisterThirdPage extends AppCompatActivity {
             n2.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                    if(i == keyEvent.KEYCODE_DEL){
+                    if (i == keyEvent.KEYCODE_DEL && n2.getText().toString().equals("")) {
                         n1.requestFocus();
                     }
                     return false;
@@ -75,9 +75,21 @@ public class RegisterThirdPage extends AppCompatActivity {
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    Log.i("Length","------> " + n1.getText().toString().length());
+
                     if(n2.getText().toString().length()==1){
                         n3.requestFocus();
+                    }
+
+                    if(i1==1 && i2==0) {
+                        n2.setOnKeyListener(new View.OnKeyListener() {
+                            @Override
+                            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                                if (i == keyEvent.KEYCODE_DEL) {
+                                    n1.requestFocus();
+                                }
+                                return false;
+                            }
+                        });
                     }
                 }
 
@@ -90,7 +102,7 @@ public class RegisterThirdPage extends AppCompatActivity {
             n3.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                    if(i == keyEvent.KEYCODE_DEL){
+                    if (i == keyEvent.KEYCODE_DEL && n3.getText().toString().equals("")) {
                         n2.requestFocus();
                     }
                     return false;
@@ -104,9 +116,21 @@ public class RegisterThirdPage extends AppCompatActivity {
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    Log.i("Length","------> " + n1.getText().toString().length());
+
                     if(n3.getText().toString().length()==1){
                         n4.requestFocus();
+                    }
+
+                    if(i1==1 && i2==0) {
+                        n3.setOnKeyListener(new View.OnKeyListener() {
+                            @Override
+                            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                                if (i == keyEvent.KEYCODE_DEL) {
+                                    n2.requestFocus();
+                                }
+                                return false;
+                            }
+                        });
                     }
                 }
 
@@ -119,10 +143,40 @@ public class RegisterThirdPage extends AppCompatActivity {
             n4.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                    if(i == keyEvent.KEYCODE_DEL){
+                    if (i == keyEvent.KEYCODE_DEL && n4.getText().toString().equals("")) {
                         n3.requestFocus();
                     }
                     return false;
+                }
+            });
+            n4.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    if(n3.getText().toString().length()==1){
+                        n4.requestFocus();
+                    }
+
+                    if(i1==1 && i2==0) {
+                        n4.setOnKeyListener(new View.OnKeyListener() {
+                            @Override
+                            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                                if (i == keyEvent.KEYCODE_DEL) {
+                                    n3.requestFocus();
+                                }
+                                return false;
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
                 }
             });
 
@@ -197,6 +251,10 @@ public class RegisterThirdPage extends AppCompatActivity {
                                     if(response.equals("SUCCESS")){
                                         Intent intent = new Intent(RegisterThirdPage.this,RegisterForthPage.class);
                                         startActivity(intent);
+                                    } else if(response.equals("TIMEOUT")){
+                                        Logout();
+                                        Intent intent1 = new Intent(RegisterThirdPage.this,MainActivity.class);
+                                        startActivity(intent1);
                                     }
                                     Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
 

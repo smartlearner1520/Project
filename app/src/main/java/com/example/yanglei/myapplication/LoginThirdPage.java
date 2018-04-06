@@ -41,6 +41,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -71,7 +72,7 @@ public class LoginThirdPage extends AppCompatActivity {
     private Button takePictureButton;
     private TextureView textureView;
     private String filepath = "";
-    private static int ID=0;
+    private static int count=0;
     ProgressDialog progressDialog;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     static {
@@ -324,6 +325,7 @@ public class LoginThirdPage extends AppCompatActivity {
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
                     progressDialog.show(); // Display Progress Dialog
                     progressDialog.setCancelable(true);
+                    count=0;
 
                     String url = MyApp.Domain + "login/photo/";
                     MyRequest postRequest = new MyRequest(Request.Method.POST, url,
@@ -332,8 +334,33 @@ public class LoginThirdPage extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     // response
-                                    if(response.equals("SUCCESS")) {
-                                        Toast.makeText(LoginThirdPage.this, "Have received the image, please wait for 20s", Toast.LENGTH_LONG).show();
+                                    progressDialog.dismiss();
+                                    Toast.makeText(LoginThirdPage.this, response, Toast.LENGTH_LONG).show();
+                                    logout.setText("Logout");
+                                    Log.i("digital card", response);
+                                    String[] opt = response.split(" ");
+                                    String resp = opt[0];
+                                    if(resp.equals("SUCCESS")){
+                                        count=0;
+                                        Intent intent = new Intent(LoginThirdPage.this,LoginDigitalCard.class);
+                                        intent.putExtra("opt",opt);
+                                        startActivity(intent);
+                                    } else if(resp.equals("TIMEOUT")){
+                                        count=0;
+                                        Logout();
+                                        Intent intent1 = new Intent(LoginThirdPage.this,MainActivity.class);
+                                        startActivity(intent1);
+                                    } else{
+                                        count++;
+                                        if(count>=2){
+                                            count=0;
+                                            Toast.makeText(LoginThirdPage.this, "Sorry, try too many times. Please login again!", Toast.LENGTH_LONG).show();
+                                            Logout();
+                                            Intent intent = new Intent(LoginThirdPage.this, MainActivity.class);
+                                            startActivity(intent);
+                                        } else{
+                                            Toast.makeText(LoginThirdPage.this, "Fail,Please try again", Toast.LENGTH_LONG).show();
+                                        }
                                     }
                                 }
                             },
@@ -359,47 +386,15 @@ public class LoginThirdPage extends AppCompatActivity {
                             return map;
                         }
                     };
+
+                    postRequest.setRetryPolicy(new DefaultRetryPolicy(
+                            30000,
+                            0,  // maxNumRetries = 0 means no retry
+                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
                     queue.add(postRequest);
                     createCameraPreview();
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
 
-                            String url1 = MyApp.Domain + "login/photoveri/";
-                            MyRequest postRequest1 = new MyRequest(Request.Method.POST, url1,
-                                    new Response.Listener<String>()
-                                    {
-                                        @Override
-                                        public void onResponse(String response) {
-                                            // response
-                                            progressDialog.dismiss();
-                                            Toast.makeText(LoginThirdPage.this, response, Toast.LENGTH_LONG).show();
-                                            logout.setText("Logout");
-                                            if(response.equals("SUCCESS")){
-                                                Intent intent = new Intent(LoginThirdPage.this,LoginSuccessfully.class);
-                                                startActivity(intent);
-                                            }
-                                        }
-                                    },
-                                    new Response.ErrorListener()
-                                    {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-                                            // error
-                                            Log.d("Error.Response", error.toString());
-                                        }
-                                    }
-                            ) {
-                                @Override
-                                protected Map<String,String> getParams(){
-                                    return null;
-                                }
-                            };
-                            queue.add(postRequest1);
-
-                        }
-                    }, 20000);
 
 
                 }

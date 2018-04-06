@@ -273,6 +273,10 @@ public class RegisterForthPage extends AppCompatActivity {
                                     if(response.equals("SUCCESS")){
                                         pic.setText("Success! Left " + (3-count) + "pics");
                                         count++;
+                                    } else if(response.equals("TIMEOUT")){
+                                        Logout();
+                                        Intent intent1 = new Intent(RegisterForthPage.this,MainActivity.class);
+                                        startActivity(intent1);
                                     }
                                     if(count==4) {
                                         Toast.makeText(RegisterForthPage.this,"Thanks! You have already registered! ",Toast.LENGTH_LONG).show();

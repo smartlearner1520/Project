@@ -22,11 +22,11 @@ import com.android.volley.VolleyError;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginFirstPage extends AppCompatActivity {
+public class LoginDigitalCard extends AppCompatActivity {
+    private TextView t1,t2,t3,t4;
+    private String num,i1,i2,i3,i4;
     private EditText n1,n2,n3,n4;
-    private Button resend,verf;
-    private TextView logout;
-    String num,i1,i2,i3,i4;
+    private Button button;
     ProgressDialog progressDialog;
     MyApp myapp = MyApp.get();
     final RequestQueue queue = myapp.getRequestQueue();
@@ -34,12 +34,22 @@ public class LoginFirstPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_first_page);
+        setContentView(R.layout.login_digital_card);
 
-        resend = (Button) findViewById(R.id.resend2);
-        verf = (Button) findViewById(R.id.verification2);
+        String[] inp = getIntent().getStringArrayExtra("opt");
+        t1 = (TextView) findViewById(R.id.dct1);
+        t1.setText(inp[1]);
 
-        n1 = (EditText) findViewById(R.id.email11);
+        t2 = (TextView) findViewById(R.id.dct2);
+        t2.setText(inp[2]);
+
+        t3 = (TextView) findViewById(R.id.dct3);
+        t3.setText(inp[3]);
+
+        t4 = (TextView) findViewById(R.id.dct4);
+        t4.setText(inp[4]);
+
+        n1 = (EditText) findViewById(R.id.dc1);
         n1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -48,7 +58,7 @@ public class LoginFirstPage extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                Log.i("Length","------> " + n1.getText().toString().length());
                 if(n1.getText().toString().length()==1){
                     n2.requestFocus();
                 }
@@ -59,11 +69,11 @@ public class LoginFirstPage extends AppCompatActivity {
 
             }
         });
-        n2 = (EditText) findViewById(R.id.email12);
+        n2 = (EditText) findViewById(R.id.dc2);
         n2.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (i == keyEvent.KEYCODE_DEL && n2.getText().toString().equals("")) {
+                if(i == keyEvent.KEYCODE_DEL){
                     n1.requestFocus();
                 }
                 return false;
@@ -77,21 +87,9 @@ public class LoginFirstPage extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                Log.i("Length","------> " + n1.getText().toString().length());
                 if(n2.getText().toString().length()==1){
                     n3.requestFocus();
-                }
-
-                if(i1==1 && i2==0) {
-                    n2.setOnKeyListener(new View.OnKeyListener() {
-                        @Override
-                        public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                            if (i == keyEvent.KEYCODE_DEL) {
-                                n1.requestFocus();
-                            }
-                            return false;
-                        }
-                    });
                 }
             }
 
@@ -100,11 +98,11 @@ public class LoginFirstPage extends AppCompatActivity {
 
             }
         });
-        n3 = (EditText) findViewById(R.id.email13);
+        n3 = (EditText) findViewById(R.id.dc3);
         n3.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (i == keyEvent.KEYCODE_DEL && n3.getText().toString().equals("")) {
+                if(i == keyEvent.KEYCODE_DEL){
                     n2.requestFocus();
                 }
                 return false;
@@ -118,21 +116,9 @@ public class LoginFirstPage extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                Log.i("Length","------> " + n1.getText().toString().length());
                 if(n3.getText().toString().length()==1){
                     n4.requestFocus();
-                }
-
-                if(i1==1 && i2==0) {
-                    n3.setOnKeyListener(new View.OnKeyListener() {
-                        @Override
-                        public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                            if (i == keyEvent.KEYCODE_DEL) {
-                                n2.requestFocus();
-                            }
-                            return false;
-                        }
-                    });
                 }
             }
 
@@ -141,89 +127,19 @@ public class LoginFirstPage extends AppCompatActivity {
 
             }
         });
-        n4 = (EditText) findViewById(R.id.email14);
+        n4 = (EditText) findViewById(R.id.dc4);
         n4.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (i == keyEvent.KEYCODE_DEL && n4.getText().toString().equals("")) {
+                if(i == keyEvent.KEYCODE_DEL){
                     n3.requestFocus();
                 }
                 return false;
             }
         });
-        n4.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(n3.getText().toString().length()==1){
-                    n4.requestFocus();
-                }
-
-                if(i1==1 && i2==0) {
-                    n4.setOnKeyListener(new View.OnKeyListener() {
-                        @Override
-                        public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                            if (i == keyEvent.KEYCODE_DEL) {
-                                n3.requestFocus();
-                            }
-                            return false;
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-
-
-
-
-        resend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                progressDialog = new ProgressDialog(LoginFirstPage.this);
-                progressDialog.setMessage("Loading..."); // Setting Message
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-                progressDialog.show(); // Display Progress Dialog
-                progressDialog.setCancelable(true);
-                String url = MyApp.Domain + "login/email/";
-                MyRequest postRequest = new MyRequest(Request.Method.POST, url,
-                        new Response.Listener<String>()
-                        {
-                            @Override
-                            public void onResponse(String response) {
-                                // response
-                                progressDialog.dismiss();
-                            }
-                        },
-                        new Response.ErrorListener()
-                        {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // error
-                                Log.d("Error.Response", error.toString());
-                            }
-                        }
-                ) {
-                    @Override
-                    protected Map<String, String> getParams()
-                    {
-                        return null;
-                    }
-                };
-                queue.add(postRequest);
-            }
-        });
-
-        verf.setOnClickListener(new View.OnClickListener() {
+        button = (Button) findViewById(R.id.dcverf);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 i1 = n1.getText().toString();
@@ -231,30 +147,29 @@ public class LoginFirstPage extends AppCompatActivity {
                 i3 = n3.getText().toString();
                 i4 = n4.getText().toString();
                 num = i1+ i2+ i3+ i4;
-                Log.i("verf"," the number is " + num);
 
-                progressDialog = new ProgressDialog(LoginFirstPage.this);
+                progressDialog = new ProgressDialog(LoginDigitalCard.this);
                 progressDialog.setMessage("Loading..."); // Setting Message
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
                 progressDialog.show(); // Display Progress Dialog
                 progressDialog.setCancelable(true);
-                String url = MyApp.Domain + "login/emailveri/";
+
+                Log.i("verf"," the number is " + num);
+                String url = MyApp.Domain + "login/digicardveri/";
                 MyRequest postRequest = new MyRequest(Request.Method.POST, url,
                         new Response.Listener<String>()
                         {
                             @Override
                             public void onResponse(String response) {
-                                // response
                                 progressDialog.dismiss();
-                                if(response.equals("SUCCESS")){
-                                    Intent intent = new Intent(LoginFirstPage.this,LoginSecondPage.class);
+                                if(response.equals("SUCCESS")) {
+                                    Intent intent = new Intent(LoginDigitalCard.this, LoginSuccessfully.class);
                                     startActivity(intent);
                                 } else if(response.equals("TIMEOUT")){
                                     Logout();
-                                    Intent intent1 = new Intent(LoginFirstPage.this,MainActivity.class);
+                                    Intent intent1 = new Intent(LoginDigitalCard.this,MainActivity.class);
                                     startActivity(intent1);
                                 }
-                                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
 
                             }
                         },
@@ -271,7 +186,7 @@ public class LoginFirstPage extends AppCompatActivity {
                     protected Map<String, String> getParams()
                     {
                         Map<String, String>  params = new HashMap<String, String>();
-                        params.put("randomcode", num);
+                        params.put("answer", num);
 
                         return params;
                     }
@@ -280,7 +195,12 @@ public class LoginFirstPage extends AppCompatActivity {
             }
         });
 
+
+
     }
+
+
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
@@ -299,7 +219,7 @@ public class LoginFirstPage extends AppCompatActivity {
     public void onBackPressed() {
         Log.d("yl", "onBackPressed Called");
         Logout();
-        Intent intent = new Intent(LoginFirstPage.this, MainActivity.class);
+        Intent intent = new Intent(LoginDigitalCard.this, MainActivity.class);
         startActivity(intent);
     }
 

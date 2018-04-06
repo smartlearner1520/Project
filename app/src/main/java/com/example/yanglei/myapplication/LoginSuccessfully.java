@@ -52,8 +52,6 @@ public class LoginSuccessfully extends AppCompatActivity {
     public void onBackPressed() {
         Log.d("yl", "onBackPressed Called");
         Logout();
-        Intent intent = new Intent(LoginSuccessfully.this, MainActivity.class);
-        startActivity(intent);
     }
 
 

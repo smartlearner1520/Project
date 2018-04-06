@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/register"
+    tools:context="com.example.yanglei.myapplication.RegisterSecondPage">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="100dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/dct1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:gravity="center"
+            android:textColor="@color/white"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="234dp" />
+
+        <TextView
+            android:id="@+id/dct2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="number"
+            android:textColor="@color/white"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="234dp" />
+
+        <TextView
+            android:id="@+id/dct3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:gravity="center"
+            android:textColor="@color/white"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="234dp" />
+
+        <TextView
+            android:id="@+id/dct4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:gravity="center"
+            android:textColor="@color/white"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="234dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="100dp"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/dc1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:maxLength="1"
+            android:gravity="center"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="234dp" />
+
+        <EditText
+            android:id="@+id/dc2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:maxLength="1"
+            android:gravity="center"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="234dp" />
+
+        <EditText
+            android:id="@+id/dc3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:maxLength="1"
+            android:gravity="center"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="234dp" />
+
+        <EditText
+            android:id="@+id/dc4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:maxLength="1"
+            android:gravity="center"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="234dp" />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/dcverf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:gravity="center"
+        android:text="Continue"
+        android:background="@drawable/buttonwhite"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

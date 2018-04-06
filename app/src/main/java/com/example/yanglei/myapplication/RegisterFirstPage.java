@@ -3,6 +3,7 @@ package com.example.yanglei.myapplication;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -77,6 +78,8 @@ public class RegisterFirstPage extends AppCompatActivity {
                 pw = password.getText().toString();
                 if(!pw.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")){
                     pwtext.setText("At least One lower and upper case letter\nAt least 8 spaces");
+                    int c = Color.parseColor("#c417ccd6");
+                    pwtext.setTextColor(c);
                     Log.i("username","    -->invalid password");
                     isvalid=false;
                 } else{
