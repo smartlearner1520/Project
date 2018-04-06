@@ -325,7 +325,6 @@ public class LoginThirdPage extends AppCompatActivity {
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
                     progressDialog.show(); // Display Progress Dialog
                     progressDialog.setCancelable(true);
-                    count=0;
 
                     String url = MyApp.Domain + "login/photo/";
                     MyRequest postRequest = new MyRequest(Request.Method.POST, url,
