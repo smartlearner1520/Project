@@ -231,7 +231,7 @@ public class LoginDigitalCard extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"You have successfully logged out!",Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener()

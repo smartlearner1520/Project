@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/camera1"
+    android:background="@drawable/reg"
     tools:context="com.example.yanglei.myapplication.RegisterForthPage">
     <TextureView
         android:id="@+id/texture"
@@ -26,7 +26,7 @@
         android:layout_marginStart="9dp"
         android:textColor="@color/white"
         android:textSize="18dp"
-        android:text="Please Take 3 pictures! Left 3 pics."
+        android:text="3 pictures left"
         android:layout_alignRight="@+id/texture"
         android:layout_alignEnd="@+id/texture" />
     <Button

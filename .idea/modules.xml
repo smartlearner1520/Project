@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Project.iml" filepath="$PROJECT_DIR$/Project.iml" />
       <module fileurl="file://C:\Users\Dell\AndroidStudioProjects\VerifieAndroid\Project.iml" filepath="C:\Users\Dell\AndroidStudioProjects\VerifieAndroid\Project.iml" />
-      <module fileurl="file://$PROJECT_DIR$/VerifieAndroid.iml" filepath="$PROJECT_DIR$/VerifieAndroid.iml" />
+      <module fileurl="file://C:\Users\yangl\Desktop\Project\VerifieAndroid.iml" filepath="C:\Users\yangl\Desktop\Project\VerifieAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://C:\Users\Dell\AndroidStudioProjects\VerifieAndroid\app\app.iml" filepath="C:\Users\Dell\AndroidStudioProjects\VerifieAndroid\app\app.iml" />
     </modules>

@@ -198,6 +198,7 @@ public class LoginSecondPage extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(),"Please check your SMS again.",Toast.LENGTH_SHORT).show();
                             }
                         },
                         new Response.ErrorListener()
@@ -249,9 +250,13 @@ public class LoginSecondPage extends AppCompatActivity {
                                     startActivity(intent);
                                 } else if(response.equals("TIMEOUT")){
                                     Logout();
+                                    Toast.makeText(getApplicationContext(),"Time out, please try again!",Toast.LENGTH_SHORT).show();
                                     Intent intent1 = new Intent(LoginSecondPage.this,MainActivity.class);
                                     startActivity(intent1);
+                                } else{
+                                    Toast.makeText(getApplicationContext(),"Incorrect input, please try again!",Toast.LENGTH_SHORT).show();
                                 }
+
 
                             }
                         },
@@ -310,7 +315,7 @@ public class LoginSecondPage extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"You have successfully logged out!",Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener()

@@ -268,18 +268,19 @@ public class RegisterForthPage extends AppCompatActivity {
                                 public void onResponse(String response) {
                                     // response
                                     progressDialog.dismiss();
-                                    Toast.makeText(RegisterForthPage.this,response,Toast.LENGTH_SHORT).show();
+
                                     //TODO add intent once the pic verification is successful
                                     if(response.equals("SUCCESS")){
-                                        pic.setText("Success! Left " + (3-count) + "pics");
+                                        pic.setText((3-count) + " pictures left.");
                                         count++;
                                     } else if(response.equals("TIMEOUT")){
                                         Logout();
+                                        Toast.makeText(RegisterForthPage.this,"Time out, please try again!",Toast.LENGTH_SHORT).show();
                                         Intent intent1 = new Intent(RegisterForthPage.this,MainActivity.class);
                                         startActivity(intent1);
                                     }
                                     if(count==4) {
-                                        Toast.makeText(RegisterForthPage.this,"Thanks! You have already registered! ",Toast.LENGTH_LONG).show();
+                                        Toast.makeText(RegisterForthPage.this,"Thanks! You have already registered! ",Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
                                     }
@@ -457,7 +458,7 @@ public class RegisterForthPage extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"You have successfully logged out!",Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener()

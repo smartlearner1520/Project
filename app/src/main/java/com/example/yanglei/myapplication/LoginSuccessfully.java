@@ -63,7 +63,7 @@ public class LoginSuccessfully extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"You have successfully logged out!",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginSuccessfully.this, MainActivity.class);
                         startActivity(intent);
                     }

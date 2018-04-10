@@ -130,7 +130,7 @@ public class LoginThirdPage extends AppCompatActivity {
                             public void onResponse(String response) {
                                 // response
                                 progressDialog.dismiss();
-                                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(),"You have successfully logged out!",Toast.LENGTH_LONG).show();
                                 Log.i("Verifcation","----> " + response);
                                 Intent intent = new Intent(LoginThirdPage.this, MainActivity.class);
                                 startActivity(intent);
@@ -334,7 +334,6 @@ public class LoginThirdPage extends AppCompatActivity {
                                 public void onResponse(String response) {
                                     // response
                                     progressDialog.dismiss();
-                                    Toast.makeText(LoginThirdPage.this, response, Toast.LENGTH_LONG).show();
                                     logout.setText("Logout");
                                     Log.i("digital card", response);
                                     String[] opt = response.split(" ");
@@ -347,18 +346,19 @@ public class LoginThirdPage extends AppCompatActivity {
                                     } else if(resp.equals("TIMEOUT")){
                                         count=0;
                                         Logout();
+                                        Toast.makeText(LoginThirdPage.this, "Time out, please try again!", Toast.LENGTH_SHORT).show();
                                         Intent intent1 = new Intent(LoginThirdPage.this,MainActivity.class);
                                         startActivity(intent1);
                                     } else{
                                         count++;
                                         if(count>=2){
                                             count=0;
-                                            Toast.makeText(LoginThirdPage.this, "Sorry, try too many times. Please login again!", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(LoginThirdPage.this, "Sorry, too many tries!", Toast.LENGTH_SHORT).show();
                                             Logout();
                                             Intent intent = new Intent(LoginThirdPage.this, MainActivity.class);
                                             startActivity(intent);
                                         } else{
-                                            Toast.makeText(LoginThirdPage.this, "Fail,Please try again", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(LoginThirdPage.this, "Please try again!", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }
@@ -489,7 +489,7 @@ public class LoginThirdPage extends AppCompatActivity {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 // close the app
-                Toast.makeText(LoginThirdPage.this, "Sorry!!!, you can't use this app without granting permission", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginThirdPage.this, "Sorry!, you can't use this app without granting permission", Toast.LENGTH_LONG).show();
                 finish();
             }
         }
@@ -543,7 +543,7 @@ public class LoginThirdPage extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"You have successfully logged out!",Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener()

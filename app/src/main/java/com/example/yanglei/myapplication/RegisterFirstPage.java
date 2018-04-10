@@ -77,7 +77,7 @@ public class RegisterFirstPage extends AppCompatActivity {
                 }
                 pw = password.getText().toString();
                 if(!pw.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")){
-                    pwtext.setText("At least One lower and upper case letter\nAt least 8 spaces");
+                    pwtext.setText("At least one lower and upper case letter\nAt least eight characters");
                     int c = Color.parseColor("#c417ccd6");
                     pwtext.setTextColor(c);
                     Log.i("username","    -->invalid password");
@@ -124,7 +124,7 @@ public class RegisterFirstPage extends AppCompatActivity {
                 Log.i("valid","  " + isvalid);
                 Log.i("state","    " + canswip);
                 if(CheckEmpty(name,pw)){
-                    Toast.makeText(getApplicationContext(), "You need to fill in the blank",
+                    Toast.makeText(getApplicationContext(), "Please fill in the blanks.",
                             Toast.LENGTH_SHORT).show();
                 } else if(!isvalid){
                     Toast.makeText(getApplicationContext(), "Invalid input",
@@ -153,8 +153,9 @@ public class RegisterFirstPage extends AppCompatActivity {
                                         pntext.setText("");
                                         Intent intent = new Intent(RegisterFirstPage.this,RegisterSecondPage.class);
                                         startActivity(intent);
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Username exists.", Toast.LENGTH_LONG).show();
                                     }
-                                    Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
 
                                 }
                             },
@@ -225,7 +226,7 @@ public class RegisterFirstPage extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"You have successfully logged out!",Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener()
