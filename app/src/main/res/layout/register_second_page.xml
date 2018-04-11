@@ -8,10 +8,22 @@
     android:background="@drawable/reg"
     tools:context="com.example.yanglei.myapplication.RegisterSecondPage">
 
+    <TextView
+        android:id="@+id/create"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:text="Email Verification"
+        android:textStyle="bold"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="60dp"
         android:layout_marginLeft="100dp"
         android:orientation="horizontal">
         <EditText
