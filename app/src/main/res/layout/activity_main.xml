@@ -72,7 +72,8 @@
         android:layout_marginBottom="15dp"
         android:background="@drawable/buttonwhite"
         android:gravity="center"
-        android:text="Get  Start"
+        android:text="Login"
+        android:textStyle="bold"
         android:textColor="@color/white" />
 
     <TextView
