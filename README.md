@@ -16,7 +16,3 @@ We validate input entered by a user, sending it to our server if it passes our f
 ## Requirements
 
 Android Studio version: 3.0
-
-## Unimplemented Features
-
-* DigiCard implementation for interfacing with server-side
