@@ -77,7 +77,7 @@ public class RegisterFirstPage extends AppCompatActivity {
                 }
                 pw = password.getText().toString();
                 if(!pw.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")){
-                    pwtext.setText("At least one lower and upper case letter\nAt least eight characters");
+                    pwtext.setText("At least one lower and upper case letter\nAt least eight characters with digital number");
                     int c = Color.parseColor("#c417ccd6");
                     pwtext.setTextColor(c);
                     Log.i("username","    -->invalid password");

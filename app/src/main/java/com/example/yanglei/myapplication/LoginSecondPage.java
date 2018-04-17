@@ -191,7 +191,7 @@ public class LoginSecondPage extends AppCompatActivity {
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
                 progressDialog.show(); // Display Progress Dialog
                 progressDialog.setCancelable(true);
-                String url = MyApp.Domain + "login/phoneveri/";
+                String url = MyApp.Domain + "login/phone/";
                 MyRequest postRequest = new MyRequest(Request.Method.POST, url,
                         new Response.Listener<String>()
                         {
